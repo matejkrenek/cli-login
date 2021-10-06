@@ -1,3 +1,4 @@
+import helpers.crypto as crypto
 import sys
 
 class CLI:
@@ -8,6 +9,8 @@ class CLI:
     def command(self, name, description = "---", *args, **kwargs):
         def wrapper(func):
 
+            print("command")
+
             func.command = {
                 "name": name.strip().replace(" ", "-"),
                 "shortcut": "",
@@ -17,9 +20,8 @@ class CLI:
 
             self.commands.append(func.command)
 
-            print("idk:", func)
-
             return func
+
         return wrapper
 
     def option(self, *args, **kwargs):
@@ -29,14 +31,27 @@ class CLI:
 
             return func
         return wrapper
+
+    def authorize(self, email, password):
+        self.user = {
+            "email": email,
+            "password": crypto.encode(password)
+        }
+
+        return self.user
+        
     
+    def notFound(self, cmd):
+        print(f"'{cmd}' does not exist")
+        self.run()
+
     def run(self):
         cmd = input(f"{self.prepand} ")
 
         for command in self.commands:
             if command["name"] == cmd:
-                command["function"]()
+                command["function"](self)
                 self.run()
                 return
 
-        sys.exit(1)
+        self.notFound(cmd)  
