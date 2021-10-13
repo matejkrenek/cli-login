@@ -1,6 +1,6 @@
 EMAILER = {
     "MIDDLEMAN": {
-        "email": "matejkrenek.spam@gmail.ccom",
+        "email": "matejkrenek.spam@gmail.com",
         "password": "8;P/#<VY+3k}Y9n/"
     },
     "SERVER": {

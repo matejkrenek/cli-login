@@ -5,11 +5,10 @@ class CLI:
     def __init__(self, prepand, *args, **kwargs):
         self.prepand = prepand
         self.commands = []
+        self.user = {}
 
     def command(self, name, description = "---", *args, **kwargs):
         def wrapper(func):
-
-            print("command")
 
             func.command = {
                 "name": name.strip().replace(" ", "-"),
@@ -42,7 +41,13 @@ class CLI:
         
     
     def notFound(self, cmd):
-        print(f"'{cmd}' does not exist")
+        commonCommand = ""
+
+        for command in self.commands:
+            if cmd in command["name"]:
+                commonCommand+=command["name"] + " "
+
+        print(f"'{cmd}' does not exist, do you mean: {commonCommand}?")
         self.run()
 
     def run(self):

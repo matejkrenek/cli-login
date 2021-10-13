@@ -9,7 +9,7 @@ cli = CLI(
 )
 
 # help command
-@cli.command("--help", "testing command")
+@cli.command("--help", "shows this help legend")
 def help(self, *args, **kwargs):
     print("\n")
 
@@ -19,7 +19,7 @@ def help(self, *args, **kwargs):
     print("\n")
 
 # exit command
-@cli.command("--exit", "exit command")
+@cli.command("--exit", "exists CLI")
 def exit(self, *args, **kwargs):
     agreement = input("Are you sure you want to leave (Y/N): ")
 
@@ -30,11 +30,13 @@ def exit(self, *args, **kwargs):
 
 @cli.command("login", "login to google")
 def login(self, *args, **kwargs):
-    email = input("Email: ")
-    password = getpass.getpass("Password: ")
-    
-    user = cli.authorize(email, password)
-    sender = Emailer(user, EMAILER["SERVER"])
+    if cli.user:
+        print(f"You are already login as {cli.user['email']}")
+        return
+    else:   
+        email = input("Email: ")
+        password = getpass.getpass("Password: ")
+        user = cli.authorize(email, password)
 
 if __name__ == "__main__":
     # run cli
