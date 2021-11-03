@@ -5,7 +5,6 @@ class CLI:
     def __init__(self, prepand, *args, **kwargs):
         self.prepand = prepand
         self.commands = []
-        self.user = {}
 
     def command(self, name, description = "---", *args, **kwargs):
         def wrapper(func):
@@ -30,15 +29,6 @@ class CLI:
 
             return func
         return wrapper
-
-    def authorize(self, email, password):
-        self.user = {
-            "email": email,
-            "password": crypto.encode(password)
-        }
-
-        return self.user
-        
     
     def notFound(self, cmd):
         commonCommand = ""

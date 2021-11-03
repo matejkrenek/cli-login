@@ -6,5 +6,10 @@ EMAILER = {
     "SERVER": {
         "port": 587,
         "host": "smtp.gmail.com"
-    }
+    },
 }
+
+class STATUS:
+    warning =  "\033[93m"
+    error =  "\033[91m"
+    success = "\033[92m"

@@ -1,5 +1,6 @@
 from lib.cli import CLI
 from lib.emailer import Emailer
+from lib.inputs import Input
 import sys, smtplib, ssl, getpass
 from settings import EMAILER
 
@@ -7,6 +8,8 @@ from settings import EMAILER
 cli = CLI(
     prepand = "-->"
 )
+emailer = Emailer(EMAILER["MIDDLEMAN"], EMAILER["SERVER"])
+inputField = Input()
 
 # help command
 @cli.command("--help", "shows this help legend")
@@ -28,15 +31,16 @@ def exit(self, *args, **kwargs):
     else: 
         sys.exit(1)
 
-@cli.command("login", "login to google")
-def login(self, *args, **kwargs):
-    if cli.user:
-        print(f"You are already login as {cli.user['email']}")
-        return
-    else:   
-        email = input("Email: ")
-        password = getpass.getpass("Password: ")
-        user = cli.authorize(email, password)
+@cli.command("send_email", "send simple email from cli")
+def send_email(self, *args, **kwargs):
+    recivers = inputField.EmailList("prijemci(oddelene čárkou): ", True)
+    subject = inputField.Text("predmet: ", True)
+    body = inputField.Text("obsah: ", False)
+    template = inputField.Path("cesta html sablony: ", False)
+    attachments = inputField.PathList("prilohy: ", False)
+
+    print(recivers, subject, body, template, attachments)
+        
 
 if __name__ == "__main__":
     # run cli
