@@ -33,14 +33,14 @@ def exit(self, *args, **kwargs):
 
 @cli.command("send_email", "send simple email from cli")
 def send_email(self, *args, **kwargs):
-    recivers = inputField.EmailList("prijemci(oddelene čárkou): ", True)
+    sender = inputField.Email("e-mail odesílatele: ", True)
+    recivers = inputField.EmailList("e-maily příjemců (oddelene čárkou): ", True)
     subject = inputField.Text("predmet: ", True)
     body = inputField.Text("obsah: ", False)
     template = inputField.Path("cesta html sablony: ", False)
     attachments = inputField.PathList("prilohy: ", False)
 
-    print(recivers, subject, body, template, attachments)
-        
+    emailer.send(sender, recivers, subject, body, template, attachments)        
 
 if __name__ == "__main__":
     # run cli
