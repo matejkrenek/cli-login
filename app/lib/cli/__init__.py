@@ -1,5 +1,5 @@
-import helpers.crypto as crypto
 import sys
+from settings import STATUS
 
 class CLI:
     def __init__(self, prepand, *args, **kwargs):
@@ -10,7 +10,7 @@ class CLI:
         def wrapper(func):
 
             func.command = {
-                "name": name.strip().replace(" ", "-"),
+                "name": name.strip().replace(" ", " "),
                 "shortcut": "",
                 "description": description,
                 "function": func
@@ -37,7 +37,7 @@ class CLI:
             if cmd in command["name"]:
                 commonCommand+=command["name"] + " "
 
-        print(f"'{cmd}' does not exist, do you mean: {commonCommand}?")
+        print(STATUS.warning + f"'{cmd}' neexistuje, máte na mysli: {commonCommand}?" + "\033[0m")
         self.run()
 
     def run(self):

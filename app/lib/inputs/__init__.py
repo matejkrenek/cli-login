@@ -1,10 +1,8 @@
 from settings import STATUS
 import re
-import calendar 
+import os
 
-print(calendar)
-
-class Input():
+class Input:
     class Formats:
         email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
@@ -49,7 +47,7 @@ class Input():
         
         if error:
             print(STATUS.error + f"{self.errors[error]}" + "\033[0m")
-            return self.EmailList(label, True, separator = ",")
+            return self.Email(label, True)
 
         return value
 
@@ -79,7 +77,7 @@ class Input():
 
         return value
 
-    def Path(self, label, required = False):
+    def Path(self, label, required = False, FILE_DIR = ""):
         value = None
 
         if required:
@@ -92,9 +90,13 @@ class Input():
         else: 
             value = input(f'{label}')
         
+        if(not os.path.exists(os.path.join(FILE_DIR, value))):
+            print(STATUS.error + f"příloha {value} neexistuje v {FILE_DIR}" + "\033[0m")
+            return self.Path(label, False, FILE_DIR)
+
         return value
 
-    def PathList(self, label, required = False):
+    def PathList(self, label, required = False, FILE_DIR = "", separator = ","):
         value = None
 
         if required:
@@ -107,7 +109,14 @@ class Input():
         else: 
             value = input(f'{label}')
         
-        return value
+        files = value.replace(" ", "").split(separator)
+
+        for file in files:
+            if(not os.path.exists(os.path.join(FILE_DIR, file))):
+                print(STATUS.error + f"příloha {file} neexistuje v {FILE_DIR}" + "\033[0m")
+                return self.PathList(label, False, FILE_DIR)
+
+        return files
 
             
     
