@@ -41,10 +41,6 @@ def send_email(self, *args, **kwargs):
     
     Email = Emailer()
     Email.to(recivers).subject(subject).body(body).html(html).attach(attachments).send()  
-
-@cli.command("template", "exists CLI")
-def exit(self, *args, **kwargs):
-    Template('index.html', {"sender": "fafd"}).render()
-
+    
 if __name__ == "__main__":
     cli.run()
