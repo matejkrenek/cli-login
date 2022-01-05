@@ -22,7 +22,7 @@ def help(self, *args, **kwargs):
     print("\n")
 
 # exit command
-@cli.command("exit", "exists CLI")
+@cli.command("exit", "exits CLI")
 def exit(self, *args, **kwargs):
     agreement = input("Are you sure you want to leave (Y/N): ")
 
