@@ -6,14 +6,7 @@ TEMPLATES_DIR = os.path.join(RESOURCES_DIR, "templates")
 ATTACHMENTS_DIR = os.path.join(RESOURCES_DIR, "attachments")
 
 EMAILER = {
-    "MIDDLEMAN": {
-        "email": "spam@matejkrenek.cz",
-        "password": "Gs1S-5qzV"
-    },
-    "SERVER": {
-        "port": 465,
-        "host": "smtp.websupport.cz"
-    },
+
 }
 
 class STATUS:
